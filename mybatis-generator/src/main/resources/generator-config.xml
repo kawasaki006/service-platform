@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "https://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="UserService" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.56.10:3306/user_db"
+                        userId="root" password="root"/>
+
+        <javaModelGenerator targetPackage="com.kawasaki.service.user_service.model"
+                            targetProject="user-service/src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="user-service/src/main/resources"/>
+
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.kawasaki.service.user_service.mapper"
+                             targetProject="user-service/src/main/java"/>
+
+        <table tableName="UMS_USERS" domainObjectName="User">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="UMS_ADDRESSES" domainObjectName="Address">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="UMS_SAVED_SERVICES" domainObjectName="SavedServices">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+
+    <context id="ProviderService" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.56.10:3306/provider_db"
+                        userId="root" password="root"/>
+
+        <javaModelGenerator targetPackage="com.kawasaki.service.provider_service.model"
+                            targetProject="provider-service/src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="provider-service/src/main/resources"/>
+
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.kawasaki.service.provider_service.mapper"
+                             targetProject="provider-service/src/main/java"/>
+
+        <table tableName="PMS_PROVIDERS" domainObjectName="Provider">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="PMS_AVAILABILITIES" domainObjectName="Availability">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="PMS_CERTIFICATIONS" domainObjectName="Certification">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+
+    <context id="ServiceService" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.56.10:3306/service_db"
+                        userId="root" password="root"/>
+
+        <javaModelGenerator targetPackage="com.kawasaki.service.service_service.model"
+                            targetProject="service-service/src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="service-service/src/main/resources"/>
+
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.kawasaki.service.service_service.mapper"
+                             targetProject="service-service/src/main/java"/>
+
+        <table tableName="SMS_CATEGORY" domainObjectName="Category">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="SMS_SERVICE" domainObjectName="Service">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="SMS_SERVICE_ATTRIBUTE" domainObjectName="ServiceAttribute">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="SMS_SERVICE_ATTRIBUTE_OPTION" domainObjectName="ServiceAttributeOption">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="SMS_SERVICE_ATTRIBUTE_VALUE" domainObjectName="ServiceAttributeValue">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+
+    <context id="BookingService" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.56.10:3306/booking_db"
+                        userId="root" password="root"/>
+
+        <javaModelGenerator targetPackage="com.kawasaki.service.booking_service.model"
+                            targetProject="booking-service/src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="booking-service/src/main/resources"/>
+
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.kawasaki.service.booking_service.mapper"
+                             targetProject="booking-service/src/main/java"/>
+
+        <table tableName="BMS_BOOKINGS" domainObjectName="Booking">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="BMS_CANCELATION_APPLICATIONS" domainObjectName="CancelationApplication">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+
+    <context id="OrderService" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.56.10:3306/order_db"
+                        userId="root" password="root"/>
+
+        <javaModelGenerator targetPackage="com.kawasaki.service.order_service.model"
+                            targetProject="order-service/src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="order-service/src/main/resources"/>
+
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.kawasaki.service.order_service.mapper"
+                             targetProject="order-service/src/main/java"/>
+
+        <table tableName="OMS_ORDERS" domainObjectName="Order">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="OMS_PAYMENTS" domainObjectName="Payment">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="OMS_REFUND_APPLICATIONS" domainObjectName="RefundApplication">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="OMS_REFUNDS" domainObjectName="Refund">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,29 @@
+server:
+  port: 88
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-service
+              uri: lb://auth-service
+              predicates:
+                - Path=/api/auth/**
+              filters:
+                - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+
+            - id: provider-service
+              uri: lb://provider-service
+              predicates:
+                - Path=/api/provider/**
+              filters:
+                - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
