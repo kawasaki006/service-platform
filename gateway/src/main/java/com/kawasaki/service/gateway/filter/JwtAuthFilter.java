@@ -34,6 +34,19 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         token = token.substring(7);
         try {
             Claims claims = JWTUtils.verifyToken(token);
+            String id = claims.get("id", Long.class).toString();
+            String name = claims.get("name", String.class);
+            String role = claims.get("role", String.class);
+            String email = claims.getSubject();
+
+            ServerHttpRequest newRequest = request.mutate()
+                    .header("X_User_Id", id)
+                    .header("X_User_Name", name)
+                    .header("X_User_Email", email)
+                    .header("X_User_Role", role)
+                    .build();
+
+            exchange = exchange.mutate().request(newRequest).build();
         } catch (Exception e) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();

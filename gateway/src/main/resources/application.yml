@@ -16,10 +16,31 @@ spring:
               filters:
                 - RewritePath=/api/(?<segment>/?.*),/$\{segment}
 
+            - id: user-service
+              uri: lb://user-service
+              predicates:
+                - Path=/api/user/**
+              filters:
+                - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+
             - id: provider-service
               uri: lb://provider-service
               predicates:
                 - Path=/api/provider/**
+              filters:
+                - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+
+            - id: service-service
+              uri: lb://service-service
+              predicates:
+                - Path=/api/service/**
+              filters:
+                - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+
+            - id: booking-service
+              uri: lb://booking-service
+              predicates:
+                - Path=/api/booking/**
               filters:
                 - RewritePath=/api/(?<segment>/?.*),/$\{segment}
 

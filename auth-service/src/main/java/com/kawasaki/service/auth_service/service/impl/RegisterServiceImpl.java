@@ -24,6 +24,7 @@ public class RegisterServiceImpl implements RegisterService {
         // return
         Map<String, String> payload = mapper.convertValue(providerDTO, Map.class);
         payload.remove("passwordHash");
+        payload.put("role", "provider");
         String token = JWTUtils.generateToken(providerDTO.getEmail(), payload);
 
         return token;

@@ -109,6 +109,21 @@
         <table tableName="BMS_CANCELATION_APPLICATIONS" domainObjectName="CancelationApplication">
             <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
         </table>
+        <table tableName="BMS_REQUESTS" domainObjectName="Request">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="BMS_REQUEST_ATTRS" domainObjectName="RequestAttr">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="BMS_REQUEST_ATTR_VALUE" domainObjectName="RequestAttrValue">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="BMS_REQUEST_ATTR_OPTIONS" domainObjectName="RequestAttrOption">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="BMS_QUOTE" domainObjectName="Quote">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
     </context>
 
     <context id="OrderService" targetRuntime="MyBatis3">

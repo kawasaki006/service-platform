@@ -17,4 +17,16 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userMapper.selectByExample(new UserExample());
     }
+
+    @Override
+    public User findByEmail(String email) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+
+        criteria.andEmailEqualTo(email);
+
+        List<User> result = userMapper.selectByExample(example);
+        return result.isEmpty() ? null : result.get(0);
+    }
+
 }
