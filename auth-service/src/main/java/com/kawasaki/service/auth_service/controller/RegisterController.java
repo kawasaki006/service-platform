@@ -1,7 +1,7 @@
 package com.kawasaki.service.auth_service.controller;
 
-import com.kawasaki.service.auth_service.DTO.CreateProviderRequestDTO;
-import com.kawasaki.service.auth_service.DTO.RegisterRequestDTO;
+import com.kawasaki.service.auth_service.dto.CreateProviderRequestDTO;
+import com.kawasaki.service.auth_service.dto.RegisterRequestDTO;
 import com.kawasaki.service.auth_service.service.RegisterService;
 import com.kawasaki.service.common.utils.ApiResponse;
 import org.springframework.beans.BeanUtils;

@@ -1,7 +1,7 @@
 package com.kawasaki.service.auth_service.feign;
 
-import com.kawasaki.service.auth_service.DTO.CreateProviderRequestDTO;
-import com.kawasaki.service.auth_service.DTO.ProviderDTO;
+import com.kawasaki.service.auth_service.dto.CreateProviderRequestDTO;
+import com.kawasaki.service.auth_service.dto.ProviderDTO;
 import com.kawasaki.service.common.utils.ApiResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

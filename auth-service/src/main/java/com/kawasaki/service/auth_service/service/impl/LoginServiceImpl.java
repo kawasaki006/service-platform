@@ -1,9 +1,9 @@
 package com.kawasaki.service.auth_service.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kawasaki.service.auth_service.DTO.LoginRequestDTO;
-import com.kawasaki.service.auth_service.DTO.ProviderDTO;
-import com.kawasaki.service.auth_service.DTO.UserDTO;
+import com.kawasaki.service.auth_service.dto.LoginRequestDTO;
+import com.kawasaki.service.auth_service.dto.ProviderDTO;
+import com.kawasaki.service.auth_service.dto.UserDTO;
 import com.kawasaki.service.auth_service.feign.ProviderFeignService;
 import com.kawasaki.service.auth_service.feign.UserFeignService;
 import com.kawasaki.service.auth_service.service.LoginService;
@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
             throw new BizException(BizExceptionCodeEnum.INVALID_EMAIL_PASSWORD);
         }
 
-        Map<String, String> payload = mapper.convertValue(userDTO, Map.class);
+        Map<String, Object> payload = mapper.convertValue(userDTO, Map.class);
         payload.remove("passwordHash");
         payload.put("role", "user");
         String token = JWTUtils.generateToken(userDTO.getEmail(), payload);
@@ -55,7 +55,7 @@ public class LoginServiceImpl implements LoginService {
             throw new BizException(BizExceptionCodeEnum.INVALID_EMAIL_PASSWORD);
         }
         // generate jwt
-        Map<String, String> payload = mapper.convertValue(providerDTO, Map.class);
+        Map<String, Object> payload = mapper.convertValue(providerDTO, Map.class);
         payload.remove("passwordHash");
         payload.put("role", "provider");
         String token = JWTUtils.generateToken(providerDTO.getEmail(), payload);

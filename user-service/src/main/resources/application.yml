@@ -6,6 +6,11 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret-key: poyopoyopoyopoyopoyopoyopoyopoyo
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

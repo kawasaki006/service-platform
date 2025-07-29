@@ -1,9 +1,9 @@
-package com.kawasaki.service.auth_service.DTO;
+package com.kawasaki.service.auth_service.dto;
 
 import lombok.Data;
 
 @Data
-public class UserDTO {
+public class ProviderDTO {
     private Long id;
     private String name;
     private String email;
