@@ -1,4 +1,4 @@
-package com.kawasaki.service.auth_service.DTO;
+package com.kawasaki.service.auth_service.dto;
 
 import lombok.Data;
 

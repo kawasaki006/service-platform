@@ -1,8 +1,8 @@
 package com.kawasaki.service.auth_service.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kawasaki.service.auth_service.DTO.CreateProviderRequestDTO;
-import com.kawasaki.service.auth_service.DTO.ProviderDTO;
+import com.kawasaki.service.auth_service.dto.CreateProviderRequestDTO;
+import com.kawasaki.service.auth_service.dto.ProviderDTO;
 import com.kawasaki.service.auth_service.feign.ProviderFeignService;
 import com.kawasaki.service.auth_service.service.RegisterService;
 import com.kawasaki.service.common.utils.JWTUtils;
@@ -22,7 +22,7 @@ public class RegisterServiceImpl implements RegisterService {
         // feign call: post provider
         ProviderDTO providerDTO = providerFeignService.createProvider(createProviderRequestDTO).getData();
         // return
-        Map<String, String> payload = mapper.convertValue(providerDTO, Map.class);
+        Map<String, Object> payload = mapper.convertValue(providerDTO, Map.class);
         payload.remove("passwordHash");
         payload.put("role", "provider");
         String token = JWTUtils.generateToken(providerDTO.getEmail(), payload);

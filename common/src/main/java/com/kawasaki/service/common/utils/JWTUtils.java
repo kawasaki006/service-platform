@@ -8,15 +8,23 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 public class JWTUtils {
     private static final String SECRET = "poyopoyopoyopoyopoyopoyopoyopoyo";
     private static final long EXPIRATION = 3600_000L;
-    public static String generateToken(String subject, Map<String, String> payload) {
+    private static final long INTERNAL_EXPIRATION = 3600_000L;
+
+    public static String generateToken(String subject, Map<String, Object> payload) {
+        return generateToken(subject, payload, "user");
+    }
+
+    public static String generateToken(String subject, Map<String, Object> payload, String tokenType) {
         SecretKey key = Keys.hmacShaKeyFor(SECRET.getBytes());
         return Jwts.builder()
                 .setSubject(subject)
                 .setClaims(payload)
+                .claim("token_type", tokenType)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(key)
@@ -34,5 +42,13 @@ public class JWTUtils {
         } catch (JwtException | IllegalArgumentException e) {
             throw new BizException(BizExceptionCodeEnum.BAD_TOKEN);
         }
+    }
+
+    public static boolean isInternalToken(String token) {
+        Claims claims = verifyToken(token);
+        if (!claims.containsKey("token_type")) {
+            throw new BizException(BizExceptionCodeEnum.BAD_TOKEN);
+        }
+        return "internal".equals(claims.get("token_type"));
     }
 }
