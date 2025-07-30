@@ -1,4 +1,4 @@
-package com.kawasaki.service.service_service.DTO;
+package com.kawasaki.service.service_service.dto;
 
 import lombok.Data;
 

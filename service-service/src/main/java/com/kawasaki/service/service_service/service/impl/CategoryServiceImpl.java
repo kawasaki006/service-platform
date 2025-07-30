@@ -1,7 +1,7 @@
 package com.kawasaki.service.service_service.service.impl;
 
 import com.kawasaki.service.common.exception.BizException;
-import com.kawasaki.service.service_service.DTO.CategoryDTO;
+import com.kawasaki.service.service_service.dto.CategoryDTO;
 import com.kawasaki.service.service_service.mapper.CategoryMapper;
 import com.kawasaki.service.service_service.model.Category;
 import com.kawasaki.service.service_service.model.CategoryExample;

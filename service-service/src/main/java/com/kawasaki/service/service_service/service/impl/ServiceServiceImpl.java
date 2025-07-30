@@ -2,7 +2,7 @@ package com.kawasaki.service.service_service.service.impl;
 
 import com.kawasaki.service.common.exception.BizException;
 import com.kawasaki.service.common.exception.BizExceptionCodeEnum;
-import com.kawasaki.service.service_service.DTO.CreateServiceRequestDTO;
+import com.kawasaki.service.service_service.dto.CreateServiceRequestDTO;
 import com.kawasaki.service.service_service.mapper.ServiceMapper;
 import com.kawasaki.service.service_service.service.ServiceService;
 import com.kawasaki.service.service_service.model.Service;

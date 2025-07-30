@@ -1,0 +1,18 @@
+{
+  "mappings": {
+    "properties": {
+      "serviceId": { "type": "long" },
+      "title":     { "type": "text" },
+      "categoryId": { "type": "long" },
+      "basePrice": { "type": "double", "index": false },
+      "addrs": {
+        "type": "nested",
+        "properties": {
+          "attrId": { "type": "long" },
+          "attrName": { "type": "keyword" },
+          "attrValue": { "type": "keyword" }
+        }
+      }
+    }
+  }
+}

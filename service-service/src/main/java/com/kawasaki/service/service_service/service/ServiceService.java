@@ -1,6 +1,6 @@
 package com.kawasaki.service.service_service.service;
 
-import com.kawasaki.service.service_service.DTO.CreateServiceRequestDTO;
+import com.kawasaki.service.service_service.dto.CreateServiceRequestDTO;
 import com.kawasaki.service.service_service.model.Service;
 import org.springframework.stereotype.Repository;
 

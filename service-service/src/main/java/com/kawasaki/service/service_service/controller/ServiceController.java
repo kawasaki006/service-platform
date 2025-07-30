@@ -1,8 +1,8 @@
 package com.kawasaki.service.service_service.controller;
 
 import com.kawasaki.service.common.utils.ApiResponse;
-import com.kawasaki.service.service_service.DTO.CreateServiceRequestDTO;
-import com.kawasaki.service.service_service.DTO.ServiceDTO;
+import com.kawasaki.service.service_service.dto.CreateServiceRequestDTO;
+import com.kawasaki.service.service_service.dto.ServiceDTO;
 import com.kawasaki.service.service_service.model.Service;
 import com.kawasaki.service.service_service.service.ServiceService;
 import jakarta.validation.Valid;

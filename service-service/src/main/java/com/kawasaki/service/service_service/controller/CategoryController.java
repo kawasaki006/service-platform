@@ -1,8 +1,7 @@
 package com.kawasaki.service.service_service.controller;
 
 import com.kawasaki.service.common.utils.ApiResponse;
-import com.kawasaki.service.service_service.DTO.CategoryDTO;
-import com.kawasaki.service.service_service.model.Category;
+import com.kawasaki.service.service_service.dto.CategoryDTO;
 import com.kawasaki.service.service_service.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

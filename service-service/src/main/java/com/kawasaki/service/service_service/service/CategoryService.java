@@ -1,7 +1,6 @@
 package com.kawasaki.service.service_service.service;
 
-import com.kawasaki.service.service_service.DTO.CategoryDTO;
-import com.kawasaki.service.service_service.model.Category;
+import com.kawasaki.service.service_service.dto.CategoryDTO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

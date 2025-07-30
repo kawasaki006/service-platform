@@ -14,7 +14,10 @@ public enum BizExceptionCodeEnum {
     DB_INSERT_FAILED(10002, "DB insertion failed"),
     INVALID_EMAIL_PASSWORD(12000, "Invalid email or password"),
     BAD_TOKEN(12001, "Invalid or expired token"),
-    EMAIL_EXISTS(12002, "Email already exists");
+    EMAIL_EXISTS(12002, "Email already exists"),
+    FAIL_TO_SAVE_ES_DOC(13001, "Failed to save es doc"),
+    INVALID_SERVICE_ID_ES(13002, "Failed to find service by the given service id");
+
 
     private int code;
     private String msg;
