@@ -28,17 +28,11 @@ public class ServiceESDoc {
     private BigDecimal basePrice;
 
     @Field(type = FieldType.Nested)
-    private List<attr> addrs;
+    private List<attr> attrs;
 
     @Data
     public static class attr {
         @Field(type = FieldType.Long)
-        private Long attrId;
-
-        @Field(type = FieldType.Keyword)
-        private String attrName;
-
-        @Field(type = FieldType.Keyword)
-        private String attrValue;
+        private Long optionId;
     }
 }

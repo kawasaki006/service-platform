@@ -7,14 +7,13 @@ PASS="ldCpAdLSaUsvvCqk*ALw"
 echo "Fetching from es..."
 
 curl -k -u "$USER:$PASS" \
-    -X GET "$HOST/service/_search" \
+    -X GET "$HOST/service/_search?pretty" \
     -H "Content-Type: application/json" \
     -d '
     {
       "query": {
         "match_all": {}
       },
-      "from": 10,
       "size": 10
     }'
 

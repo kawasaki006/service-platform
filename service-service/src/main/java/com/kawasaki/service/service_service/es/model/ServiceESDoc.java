@@ -1,4 +1,4 @@
-package com.kawasaki.service.service_service.es;
+package com.kawasaki.service.service_service.es.model;
 
 import lombok.Data;
 
@@ -7,16 +7,15 @@ import java.util.List;
 
 @Data
 public class ServiceESDoc {
+    private String id;
     private Long serviceId;
     private String title;
     private Long categoryId;
     private BigDecimal basePrice;
-    private List<attr> addrs;
+    private List<attr> attrs;
 
     @Data
     public static class attr {
-        private Long attrId;
-        private String attrName;
-        private String attrValue;
+        private Long optionId;
     }
 }

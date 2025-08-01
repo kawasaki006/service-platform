@@ -6,7 +6,6 @@ import com.kawasaki.service.common.exception.BizException;
 import com.kawasaki.service.common.exception.BizExceptionCodeEnum;
 import com.kawasaki.service.common.utils.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

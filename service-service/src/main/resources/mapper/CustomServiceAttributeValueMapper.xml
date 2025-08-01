@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kawasaki.service.service_service.mapper.CustomServiceAttributeValueMapper">
+    <insert id="batchInsert" parameterType="list">
+        INSERT INTO SMS_SERVICE_ATTRIBUTE_VALUE (SERVICE_ID, ATTRIBUTE_ID, OPTION_ID)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.serviceId,jdbcType=BIGINT}, #{item.attributeId,jdbcType=BIGINT}, #{item.optionId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+</mapper>

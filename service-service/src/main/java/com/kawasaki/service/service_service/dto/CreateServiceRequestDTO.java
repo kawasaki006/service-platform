@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class CreateServiceRequestDTO {
@@ -16,4 +17,6 @@ public class CreateServiceRequestDTO {
     private Long categoryId;
 
     private BigDecimal basePrice;
+
+    private List<AttrDTO> attrs;
 }

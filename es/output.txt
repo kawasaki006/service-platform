@@ -1,0 +1,47 @@
+Fetching from es...
+{
+  "took" : 120,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 1,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "service",
+        "_id" : "dTE5YpgBbNL-BpnvH8C4",
+        "_score" : 1.0,
+        "_source" : {
+          "_class" : "com.kawasaki.service.search_service.model.ServiceESDoc",
+          "serviceId" : 9,
+          "title" : "test service",
+          "categoryId" : 2,
+          "basePrice" : 100.0,
+          "attrs" : [
+            {
+              "optionId" : 1
+            },
+            {
+              "optionId" : 2
+            },
+            {
+              "optionId" : 3
+            },
+            {
+              "optionId" : 5
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+Done!

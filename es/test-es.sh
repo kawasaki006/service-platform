@@ -4,6 +4,11 @@ HOST="https://192.168.56.10:9200"
 USER="elastic"
 PASS="ldCpAdLSaUsvvCqk*ALw"
 
+echo "Deleting test service index..."
+
+curl -k -u "$USER:$PASS" \
+     -X DELETE "$HOST/service"
+
 echo "Creating test service index..."
 
 curl -k -u "$USER:$PASS" \
