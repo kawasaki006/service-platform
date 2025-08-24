@@ -18,10 +18,9 @@ public class QuoteController {
 
     @PostMapping("/create")
     public ApiResponse<QuoteDTO> createQuote(
-            @Valid @RequestBody CreateQuoteDTO createQuoteDTO,
-            @RequestHeader("X_User_Id") String providerIdStr) {
-        // get provider id from request header
-        long providerId = Long.valueOf(providerIdStr);
+            @Valid @RequestBody CreateQuoteDTO createQuoteDTO) {
+        //todo: get provider from security context holder
+        long providerId = Long.valueOf(2);
 
         Quote quote = quoteService.createQuote(createQuoteDTO, providerId);
         QuoteDTO quoteDTO = new QuoteDTO();

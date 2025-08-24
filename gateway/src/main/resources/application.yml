@@ -44,6 +44,13 @@ spring:
               filters:
                 - RewritePath=/api/(?<segment>/?.*),/$\{segment}
 
+            - id: order-service
+              uri: lb://order-service
+              predicates:
+                - Path=/api/order/**
+              filters:
+                - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+
             - id: search-service
               uri: lb://search-service
               predicates:

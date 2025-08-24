@@ -18,9 +18,9 @@ public class RequestController {
 
     @PostMapping("/create")
     public ApiResponse<RequestDTO> createRequest(
-            @Valid @RequestBody CreateRequestDTO createRequestDTO,
-            @RequestHeader("X_User_Id") String userIdStr) {
-        long userId = Long.valueOf(userIdStr);
+            @Valid @RequestBody CreateRequestDTO createRequestDTO) {
+        //todo: get user id from security context holder
+        long userId = Long.valueOf(2);
         Request request = requestService.createRequest(createRequestDTO, userId);
 
         RequestDTO requestDTO = new RequestDTO();
