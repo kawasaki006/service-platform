@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCreatedAt(new Date(System.currentTimeMillis()));
         order.setUpdatedAt(new Date(System.currentTimeMillis()));
 
-        // todo: insert to db
+        // insert to db
         orderMapper.insert(order);
 
         // todo: send to mq and log
