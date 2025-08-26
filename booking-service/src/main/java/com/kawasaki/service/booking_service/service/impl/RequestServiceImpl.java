@@ -1,11 +1,13 @@
 package com.kawasaki.service.booking_service.service.impl;
 
 import com.kawasaki.service.booking_service.dto.CreateRequestDTO;
+import com.kawasaki.service.booking_service.dto.GetRequestOfCategoryDTO;
 import com.kawasaki.service.booking_service.dto.RequestAttrSelectionDTO;
 import com.kawasaki.service.booking_service.mapper.RequestAttrValueMapper;
 import com.kawasaki.service.booking_service.mapper.RequestMapper;
 import com.kawasaki.service.booking_service.model.Request;
 import com.kawasaki.service.booking_service.model.RequestAttrValue;
+import com.kawasaki.service.booking_service.model.RequestExample;
 import com.kawasaki.service.booking_service.service.RequestService;
 import com.kawasaki.service.common.enume.RequestStatusEnum;
 import com.kawasaki.service.common.exception.BizException;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class RequestServiceImpl implements RequestService {
@@ -56,5 +59,27 @@ public class RequestServiceImpl implements RequestService {
         }
 
         return request;
+    }
+
+    @Override
+    public List<Request> getGeneralRequestsOfCategory(GetRequestOfCategoryDTO getRequestOfCategoryDTO) {
+        RequestExample  requestExample = new RequestExample();
+        RequestExample.Criteria criteria = requestExample.createCriteria();
+
+        criteria.andCategoryIdEqualTo(getRequestOfCategoryDTO.getCategoryId());
+        criteria.andServiceIdIsNull();
+
+        return requestMapper.selectByExample(requestExample);
+    }
+
+    @Override
+    public List<Request> getSpecificRequestsOfCategory(GetRequestOfCategoryDTO getRequestOfCategoryDTO) {
+        RequestExample  requestExample = new RequestExample();
+        RequestExample.Criteria criteria = requestExample.createCriteria();
+
+        criteria.andCategoryIdEqualTo(getRequestOfCategoryDTO.getCategoryId());
+        criteria.andServiceIdEqualTo(getRequestOfCategoryDTO.getServiceId());
+
+        return requestMapper.selectByExample(requestExample);
     }
 }

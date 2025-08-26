@@ -1,8 +1,7 @@
 package com.kawasaki.service.auth_service.security.service;
 
-import com.kawasaki.service.auth_service.dto.UserDTO;
-import com.kawasaki.service.auth_service.feign.UserFeignService;
-import com.kawasaki.service.auth_service.provider.InternalTokenProvider;
+import com.kawasaki.service.auth_service.dto.ProviderDTO;
+import com.kawasaki.service.auth_service.feign.ProviderFeignService;
 import com.kawasaki.service.auth_service.security.config.UserDetailsImpl;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,28 +15,23 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class ProviderDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    private UserFeignService userFeignService;
+    private ProviderFeignService providerFeignService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            UserDTO userDTO = userFeignService.findUserByEmail(username).getData();
+            ProviderDTO providerDTO = providerFeignService.findProviderByEmail(username).getData();
 
             List<GrantedAuthority> authorities = List.of(
-                    new SimpleGrantedAuthority("USER")
+                    new SimpleGrantedAuthority("PROVIDER")
             );
 
-            // todo: temp admin authorization, to be deleted later
-            if ("admin@poyo.com".equals(username)) {
-                authorities = List.of(new SimpleGrantedAuthority("ADMIN"));
-            }
-
             return new UserDetailsImpl(
-                    userDTO.getId(), userDTO.getEmail(), userDTO.getPasswordHash(), authorities);
+                    providerDTO.getId(), providerDTO.getEmail(), providerDTO.getPasswordHash(), authorities);
         } catch (FeignException fe) {
-            throw new UsernameNotFoundException("Email not found in user service", fe);
+            throw new UsernameNotFoundException("Email not found in provider service", fe);
         }
     }
 }

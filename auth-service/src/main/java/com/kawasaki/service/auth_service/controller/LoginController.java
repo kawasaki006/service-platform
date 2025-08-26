@@ -28,10 +28,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/auth/login")
 public class LoginController {
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
 //    @GetMapping("/user")
 //    public ApiResponse<?> userLogin(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
@@ -66,6 +66,8 @@ public class LoginController {
             .toList();
         payload.put("roles", roles);
         String jwt = JWTUtils.generateToken(loggedInUser.getUsername(), payload);
+
+        System.out.println("roles: " + roles);
 
         // return
         Map<String, String> map = new HashMap<>();

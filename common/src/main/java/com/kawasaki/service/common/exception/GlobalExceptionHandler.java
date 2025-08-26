@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<?>> exceptionHandler(Exception e) {
         log.error("Unknown exception caught: " + e.getMessage());
-        return new ResponseEntity<>(ApiResponse.error(500, "Unknown server error"),
+        return new ResponseEntity<>(ApiResponse.error(500, "Unknown server error: " + e.getMessage()),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

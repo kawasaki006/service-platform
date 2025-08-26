@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth/token")
-public class tokenController {
+public class TokenController {
     @Autowired
     InternalClientService internalClientService;
 
