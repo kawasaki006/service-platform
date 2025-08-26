@@ -11,12 +11,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
 public class ProviderServiceImpl implements ProviderService {
     @Autowired
-    ProviderMapper providerMapper;
+    private ProviderMapper providerMapper;
 
     @Override
     public Provider findByEmail(String email) {
@@ -33,7 +34,7 @@ public class ProviderServiceImpl implements ProviderService {
     public Provider createProvider(String name, String email, String phone, String password_hash, String bio) {
         // check if email exists
         Provider existingProvider = this.findByEmail(email);
-        if (existingProvider != null) {
+        if (!Objects.isNull(existingProvider)) {
             throw new BizException(BizExceptionCodeEnum.EMAIL_EXISTS);
         }
 

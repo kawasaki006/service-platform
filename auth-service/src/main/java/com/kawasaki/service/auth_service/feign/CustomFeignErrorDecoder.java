@@ -24,7 +24,7 @@ public class CustomFeignErrorDecoder implements ErrorDecoder {
                 return new BizException(BizExceptionCodeEnum.EMAIL_EXISTS);
             }
 
-            return new BizException(500, "Unknown Server Error");
+            return new BizException(500, "Unknown Server Error" + error.getMessage());
         } catch (Exception e) {
             byte[] fallback = e.getMessage().getBytes();
             return new FeignException.InternalServerError("Failed to parse feign exception", response.request(), fallback, null);

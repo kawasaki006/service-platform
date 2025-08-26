@@ -11,6 +11,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/provider/provider")
 public class ProviderController {
@@ -20,9 +22,11 @@ public class ProviderController {
     @GetMapping("/find")
     public ApiResponse<ProviderDTO> findProviderByEmail(@RequestParam String email) {
         Provider provider = providerService.findByEmail(email);
-        if (provider == null) {
-            throw new BizException(BizExceptionCodeEnum.INVALID_EMAIL_PASSWORD);
+
+        if (Objects.isNull(provider)) {
+            return ApiResponse.success(null);
         }
+
         ProviderDTO dto = new ProviderDTO();
         // expose dto fields
         BeanUtils.copyProperties(provider, dto);

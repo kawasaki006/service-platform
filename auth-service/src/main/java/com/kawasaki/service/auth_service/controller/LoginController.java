@@ -2,7 +2,6 @@ package com.kawasaki.service.auth_service.controller;
 
 import com.kawasaki.service.auth_service.dto.LoginRequestDTO;
 import com.kawasaki.service.auth_service.security.config.UserDetailsImpl;
-import com.kawasaki.service.auth_service.service.LoginService;
 import com.kawasaki.service.common.exception.BizException;
 import com.kawasaki.service.common.utils.ApiResponse;
 import com.kawasaki.service.common.utils.JWTUtils;
@@ -28,18 +27,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/auth/login")
 public class LoginController {
     @Autowired
-    private LoginService loginService;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
 
-//    @GetMapping("/user")
-//    public ApiResponse<?> userLogin(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
-//        String token = loginService.userLogin(loginRequestDTO);
-//        return ApiResponse.success(token);
-//    }
-
-    @GetMapping("/user")
+    @GetMapping("/")
     public ApiResponse<?> userLogin(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginRequestDTO.getEmail(),
@@ -73,13 +63,5 @@ public class LoginController {
         Map<String, String> map = new HashMap<>();
         map.put("token", jwt);
         return ApiResponse.success(map);
-    }
-
-    @GetMapping("/provider")
-    public ApiResponse<?> providerLogin(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
-        String email = loginRequestDTO.getEmail();
-        String password = loginRequestDTO.getPassword();
-        String token = loginService.providerLogin(email, password);
-        return ApiResponse.success(token);
     }
 }

@@ -1,7 +1,9 @@
 package com.kawasaki.service.auth_service.controller;
 
 import com.kawasaki.service.auth_service.dto.CreateProviderRequestDTO;
-import com.kawasaki.service.auth_service.dto.RegisterRequestDTO;
+import com.kawasaki.service.auth_service.dto.CreateUserRequestDTO;
+import com.kawasaki.service.auth_service.dto.ProviderRegisterRequestDTO;
+import com.kawasaki.service.auth_service.dto.UserRegisterRequestDTO;
 import com.kawasaki.service.auth_service.service.RegisterService;
 import com.kawasaki.service.common.utils.ApiResponse;
 import org.springframework.beans.BeanUtils;
@@ -20,13 +22,26 @@ public class RegisterController {
     @Autowired
     RegisterService registerService;
 
-    @PostMapping("/provider")
-    public ApiResponse<?> providerRegister(@RequestBody RegisterRequestDTO registerRequestDTO) {
+    @PostMapping("/user")
+    public ApiResponse<?> userRegister(@RequestBody UserRegisterRequestDTO userRegisterRequestDTO) {
         // encrypt password
-        String password_hash = encoder.encode(registerRequestDTO.getPassword());
+        String password_hash = encoder.encode(userRegisterRequestDTO.getPassword());
+
+        CreateUserRequestDTO createUserRequestDTO = new CreateUserRequestDTO();
+        BeanUtils.copyProperties(userRegisterRequestDTO, createUserRequestDTO);
+        createUserRequestDTO.setPasswordHash(password_hash);
+
+        String token = registerService.userRegister(createUserRequestDTO);
+        return ApiResponse.success(token);
+    }
+
+    @PostMapping("/provider")
+    public ApiResponse<?> providerRegister(@RequestBody ProviderRegisterRequestDTO providerRegisterRequestDTO) {
+        // encrypt password
+        String password_hash = encoder.encode(providerRegisterRequestDTO.getPassword());
 
         CreateProviderRequestDTO createProviderRequestDTO = new CreateProviderRequestDTO();
-        BeanUtils.copyProperties(registerRequestDTO, createProviderRequestDTO);
+        BeanUtils.copyProperties(providerRegisterRequestDTO, createProviderRequestDTO);
         createProviderRequestDTO.setPasswordHash(password_hash);
 
         // call service and get token
