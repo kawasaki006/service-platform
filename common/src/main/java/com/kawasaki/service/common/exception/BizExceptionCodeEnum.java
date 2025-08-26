@@ -1,5 +1,11 @@
 package com.kawasaki.service.common.exception;
 
+import lombok.Getter;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /*
 * 10 - general
 * 11 - user
@@ -9,6 +15,7 @@ package com.kawasaki.service.common.exception;
 * 15 - order
 *
 */
+@Getter
 public enum BizExceptionCodeEnum {
     INVALID_REQUEST_PARAMS(10001, "Invalid request params"),
     DB_INSERT_FAILED(10002, "DB insertion failed"),
@@ -23,19 +30,19 @@ public enum BizExceptionCodeEnum {
     INVALID_OR_EMPTY_ORDER_TOKEN(14001, "Invalid or empty order token");
 
 
-    private int code;
-    private String msg;
+    private final int code;
+    private final String msg;
 
     BizExceptionCodeEnum(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public int getCode() {
-        return this.code;
-    }
+    private static final Map<Integer, BizExceptionCodeEnum> CODE_MAP =
+            Arrays.stream(BizExceptionCodeEnum.values())
+                    .collect(Collectors.toMap(BizExceptionCodeEnum::getCode, e -> e));
 
-    public String getMsg() {
-        return this.msg;
+    public static BizExceptionCodeEnum fromCode(int code) {
+        return CODE_MAP.get(code);
     }
 }

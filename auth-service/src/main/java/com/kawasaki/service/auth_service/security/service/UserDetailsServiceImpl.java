@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -22,22 +23,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            UserDTO userDTO = userFeignService.findUserByEmail(username).getData();
-
-            List<GrantedAuthority> authorities = List.of(
-                    new SimpleGrantedAuthority("USER")
-            );
-
-            // todo: temp admin authorization, to be deleted later
-            if ("admin@poyo.com".equals(username)) {
-                authorities = List.of(new SimpleGrantedAuthority("ADMIN"));
-            }
-
-            return new UserDetailsImpl(
-                    userDTO.getId(), userDTO.getEmail(), userDTO.getPasswordHash(), authorities);
-        } catch (FeignException fe) {
-            throw new UsernameNotFoundException("Email not found in user service", fe);
+        UserDTO userDTO = userFeignService.findUserByEmail(username).getData();
+        if (Objects.isNull(userDTO)) {
+            throw new UsernameNotFoundException("Email not found in user service");
         }
+
+        List<GrantedAuthority> authorities = List.of(
+                new SimpleGrantedAuthority("USER")
+        );
+
+        // todo: temp admin authorization, to be deleted later
+        if ("admin@poyo.com".equals(username)) {
+            authorities = List.of(new SimpleGrantedAuthority("ADMIN"));
+        }
+
+        return new UserDetailsImpl(
+                userDTO.getId(), userDTO.getEmail(), userDTO.getPasswordHash(), authorities);
     }
 }

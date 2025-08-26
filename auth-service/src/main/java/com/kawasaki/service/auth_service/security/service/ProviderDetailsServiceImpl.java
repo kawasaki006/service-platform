@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class ProviderDetailsServiceImpl implements UserDetailsService {
@@ -21,17 +22,16 @@ public class ProviderDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            ProviderDTO providerDTO = providerFeignService.findProviderByEmail(username).getData();
-
-            List<GrantedAuthority> authorities = List.of(
-                    new SimpleGrantedAuthority("PROVIDER")
-            );
-
-            return new UserDetailsImpl(
-                    providerDTO.getId(), providerDTO.getEmail(), providerDTO.getPasswordHash(), authorities);
-        } catch (FeignException fe) {
-            throw new UsernameNotFoundException("Email not found in provider service", fe);
+        ProviderDTO providerDTO = providerFeignService.findProviderByEmail(username).getData();
+        if  (Objects.isNull(providerDTO)) {
+            throw new UsernameNotFoundException("Email not found in provider service");
         }
+
+        List<GrantedAuthority> authorities = List.of(
+                new SimpleGrantedAuthority("PROVIDER")
+        );
+
+        return new UserDetailsImpl(
+                providerDTO.getId(), providerDTO.getEmail(), providerDTO.getPasswordHash(), authorities);
     }
 }

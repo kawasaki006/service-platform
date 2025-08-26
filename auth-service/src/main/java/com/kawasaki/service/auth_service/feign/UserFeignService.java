@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value = "user-service", configuration = FeignInternalClientConfig.class)
+@FeignClient(value = "user-service")
 public interface UserFeignService {
     @GetMapping("/user/user/find")
     public ApiResponse<UserDTO> findUserByEmail(@RequestParam String email);
