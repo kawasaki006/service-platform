@@ -5,7 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan("com.kawasaki.service.booking_service.mapper")
-@SpringBootApplication
+@SpringBootApplication(
+    scanBasePackages = {
+        "com.kawasaki.service.booking_service",
+        "com.kawasaki.service.common"
+    }
+)
 public class BookingServiceApplication {
 
 	public static void main(String[] args) {

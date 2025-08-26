@@ -7,7 +7,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @MapperScan("com.kawasaki.service.service_service.mapper")
 @EnableFeignClients(basePackages = "com.kawasaki.service.service_service.feign")
-@SpringBootApplication
+@SpringBootApplication(
+    scanBasePackages = {
+        "com.kawasaki.service.service_service",
+        "com.kawasaki.service.common"
+    }
+)
 public class ServiceServiceApplication {
 
 	public static void main(String[] args) {
