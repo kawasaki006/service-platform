@@ -20,12 +20,19 @@ public class QuoteController {
     public ApiResponse<QuoteDTO> createQuote(
             @Valid @RequestBody CreateQuoteDTO createQuoteDTO) {
         //todo: get provider from security context holder
-        long providerId = Long.valueOf(2);
+        Long providerId = 2L;
 
         Quote quote = quoteService.createQuote(createQuoteDTO, providerId);
         QuoteDTO quoteDTO = new QuoteDTO();
         BeanUtils.copyProperties(quote, quoteDTO);
 
         return ApiResponse.success(quoteDTO);
+    }
+
+    // provider cancels a quote
+    @PostMapping("/cancel")
+    public ApiResponse<?> cancelQuote(@RequestParam Long requestId) {
+        quoteService.cancelQuote(requestId);
+        return ApiResponse.success();
     }
 }

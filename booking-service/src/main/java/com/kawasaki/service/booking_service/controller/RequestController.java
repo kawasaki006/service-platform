@@ -61,4 +61,11 @@ public class RequestController {
         List<Request> list = requestService.getSpecificRequestsOfCategory(getRequestOfCategoryDTO);
         return ApiResponse.success(list);
     }
+
+    // user cancels a request
+    @PostMapping("/cancel")
+    public ApiResponse<?> cancelRequest(@RequestParam Long requestId) {
+        requestService.cancelRequest(requestId);
+        return ApiResponse.success();
+    }
 }

@@ -15,4 +15,6 @@ public class CreateQuoteDTO {
 
     @NotBlank
     private BigDecimal price;
+
+    private String note;
 }

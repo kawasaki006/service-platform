@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public enum BizExceptionCodeEnum {
     INVALID_REQUEST_PARAMS(10001, "Invalid request params"),
     DB_INSERT_FAILED(10002, "DB insertion failed"),
+    DB_UPDATE_FAILED(10003, "DB update failed"),
 
     INVALID_EMAIL_PASSWORD(12000, "Invalid email or password"),
     BAD_TOKEN(12001, "Invalid or expired token"),
@@ -27,7 +28,9 @@ public enum BizExceptionCodeEnum {
     FAIL_TO_SAVE_ES_DOC(13001, "Failed to save es doc"),
     INVALID_SERVICE_ID_ES(13002, "Failed to find service by the given service id"),
 
-    INVALID_OR_EMPTY_ORDER_TOKEN(14001, "Invalid or empty order token");
+    INVALID_REQUEST(14001, "Request does not exist or is not open"),
+
+    INVALID_OR_EMPTY_ORDER_TOKEN(15001, "Invalid or empty order token");
 
 
     private final int code;

@@ -3,6 +3,7 @@ package com.kawasaki.service.booking_service.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -13,6 +14,11 @@ public class CreateRequestDTO {
 
     @NotBlank
     private Long categoryId;
+
+    @NotBlank
+    private Byte timePreference;
+
+    private BigDecimal budget;
 
     private String note;
 

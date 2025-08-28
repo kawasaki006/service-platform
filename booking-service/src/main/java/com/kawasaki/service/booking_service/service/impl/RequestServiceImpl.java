@@ -3,12 +3,12 @@ package com.kawasaki.service.booking_service.service.impl;
 import com.kawasaki.service.booking_service.dto.CreateRequestDTO;
 import com.kawasaki.service.booking_service.dto.GetRequestOfCategoryDTO;
 import com.kawasaki.service.booking_service.dto.RequestAttrSelectionDTO;
+import com.kawasaki.service.booking_service.mapper.QuoteMapper;
 import com.kawasaki.service.booking_service.mapper.RequestAttrValueMapper;
 import com.kawasaki.service.booking_service.mapper.RequestMapper;
-import com.kawasaki.service.booking_service.model.Request;
-import com.kawasaki.service.booking_service.model.RequestAttrValue;
-import com.kawasaki.service.booking_service.model.RequestExample;
+import com.kawasaki.service.booking_service.model.*;
 import com.kawasaki.service.booking_service.service.RequestService;
+import com.kawasaki.service.common.enume.QuoteStatusEnum;
 import com.kawasaki.service.common.enume.RequestStatusEnum;
 import com.kawasaki.service.common.exception.BizException;
 import com.kawasaki.service.common.exception.BizExceptionCodeEnum;
@@ -22,10 +22,13 @@ import java.util.List;
 @Service
 public class RequestServiceImpl implements RequestService {
     @Autowired
-    RequestMapper requestMapper;
+    private RequestMapper requestMapper;
 
     @Autowired
-    RequestAttrValueMapper requestAttrValueMapper;
+    private RequestAttrValueMapper requestAttrValueMapper;
+
+    @Autowired
+    private QuoteMapper quoteMapper;
 
     @Override
     @Transactional
@@ -36,6 +39,9 @@ public class RequestServiceImpl implements RequestService {
         request.setProviderId(createRequestDTO.getProviderId());
         request.setCategoryId(createRequestDTO.getCategoryId());
         request.setNote(createRequestDTO.getNote());
+        // todo: check if time preference enum is valid
+        request.setTimePreference(createRequestDTO.getTimePreference());
+        request.setBudget(createRequestDTO.getBudget());
 
         request.setCreatedAt(new Date(System.currentTimeMillis()));
         request.setUpdatedAt(new Date(System.currentTimeMillis()));
@@ -51,6 +57,7 @@ public class RequestServiceImpl implements RequestService {
             requestAttrValue.setRequestId(request.getId());
             requestAttrValue.setAttrId(attrDTO.getAttrId());
             requestAttrValue.setOptionId(attrDTO.getOptionId());
+            requestAttrValue.setIsDeleted(false);
 
             rows = requestAttrValueMapper.insert(requestAttrValue);
             if (rows != 1) {
@@ -68,18 +75,46 @@ public class RequestServiceImpl implements RequestService {
 
         criteria.andCategoryIdEqualTo(getRequestOfCategoryDTO.getCategoryId());
         criteria.andServiceIdIsNull();
+        criteria.andStatusEqualTo(RequestStatusEnum.OPEN.getCode());
 
         return requestMapper.selectByExample(requestExample);
     }
 
     @Override
     public List<Request> getSpecificRequestsOfCategory(GetRequestOfCategoryDTO getRequestOfCategoryDTO) {
-        RequestExample  requestExample = new RequestExample();
+        RequestExample requestExample = new RequestExample();
         RequestExample.Criteria criteria = requestExample.createCriteria();
 
         criteria.andCategoryIdEqualTo(getRequestOfCategoryDTO.getCategoryId());
         criteria.andServiceIdEqualTo(getRequestOfCategoryDTO.getServiceId());
+        criteria.andStatusEqualTo(RequestStatusEnum.OPEN.getCode());
 
         return requestMapper.selectByExample(requestExample);
+    }
+
+    @Transactional
+    @Override
+    public void cancelRequest(Long requestId) {
+        // mark request as cancelled
+        Request request = new Request();
+        request.setId(requestId);
+        request.setStatus(RequestStatusEnum.CANCELLED.getCode());
+        request.setUpdatedAt(new Date(System.currentTimeMillis()));
+        requestMapper.updateByPrimaryKey(request);
+
+        // mark attrs as deleted
+        RequestAttrValue requestAttrValue = new RequestAttrValue();
+        requestAttrValue.setIsDeleted(true);
+        RequestAttrValueExample requestAttrValueExample = new RequestAttrValueExample();
+        requestAttrValueExample.createCriteria().andRequestIdEqualTo(requestId);
+        requestAttrValueMapper.updateByExampleSelective(requestAttrValue, requestAttrValueExample);
+
+        // cancel related quotes
+        Quote quote = new Quote();
+        quote.setStatus(QuoteStatusEnum.WITHDRAWN.getCode());
+        quote.setUpdatedAt(new Date(System.currentTimeMillis()));
+        QuoteExample quoteExample = new QuoteExample();
+        quoteExample.createCriteria().andRequestIdEqualTo(requestId);
+        quoteMapper.updateByExampleSelective(quote, quoteExample);
     }
 }

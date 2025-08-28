@@ -5,5 +5,7 @@ import com.kawasaki.service.booking_service.model.Quote;
 import org.springframework.stereotype.Repository;
 
 public interface QuoteService {
-    Quote createQuote(CreateQuoteDTO createQuoteDTO, long providerId);
+    Quote createQuote(CreateQuoteDTO createQuoteDTO, Long providerId);
+
+    void cancelQuote(Long quoteId);
 }
