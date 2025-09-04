@@ -10,6 +10,8 @@ import com.kawasaki.service.booking_service.model.*;
 import com.kawasaki.service.booking_service.service.RequestService;
 import com.kawasaki.service.common.enume.QuoteStatusEnum;
 import com.kawasaki.service.common.enume.RequestStatusEnum;
+import com.kawasaki.service.common.events.OrderCancelEvent;
+import com.kawasaki.service.common.events.OrderCreateEvent;
 import com.kawasaki.service.common.exception.BizException;
 import com.kawasaki.service.common.exception.BizExceptionCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,14 +102,10 @@ public class RequestServiceImpl implements RequestService {
         request.setId(requestId);
         request.setStatus(RequestStatusEnum.CANCELLED.getCode());
         request.setUpdatedAt(new Date(System.currentTimeMillis()));
-        requestMapper.updateByPrimaryKey(request);
+        requestMapper.updateByPrimaryKeySelective(request);
 
         // mark attrs as deleted
-        RequestAttrValue requestAttrValue = new RequestAttrValue();
-        requestAttrValue.setIsDeleted(true);
-        RequestAttrValueExample requestAttrValueExample = new RequestAttrValueExample();
-        requestAttrValueExample.createCriteria().andRequestIdEqualTo(requestId);
-        requestAttrValueMapper.updateByExampleSelective(requestAttrValue, requestAttrValueExample);
+        deleteAttrValuesByRequestId(requestId);
 
         // cancel related quotes
         Quote quote = new Quote();
@@ -116,5 +114,41 @@ public class RequestServiceImpl implements RequestService {
         QuoteExample quoteExample = new QuoteExample();
         quoteExample.createCriteria().andRequestIdEqualTo(requestId);
         quoteMapper.updateByExampleSelective(quote, quoteExample);
+    }
+
+    @Transactional
+    @Override
+    public void handleOrderCreate(OrderCreateEvent orderCreateEvent) {
+        // close request
+        Request request = new Request();
+        request.setId(orderCreateEvent.getRequestId());
+        request.setStatus(RequestStatusEnum.CLOSED.getCode());
+        request.setUpdatedAt(new Date(System.currentTimeMillis()));
+        requestMapper.updateByPrimaryKeySelective(request);
+
+        // mark attrs as deleted
+        deleteAttrValuesByRequestId(orderCreateEvent.getRequestId());
+    }
+
+    @Transactional
+    @Override
+    public void handleOrderCancel(OrderCancelEvent orderCancelEvent) {
+        // close request
+        Request request = new Request();
+        request.setId(orderCancelEvent.getRequestId());
+        request.setStatus(RequestStatusEnum.CANCELLED.getCode());
+        request.setUpdatedAt(new Date(System.currentTimeMillis()));
+        requestMapper.updateByPrimaryKeySelective(request);
+
+        // mark attrs as deleted
+        deleteAttrValuesByRequestId(orderCancelEvent.getRequestId());
+    }
+
+    private void deleteAttrValuesByRequestId(Long requestId) {
+        RequestAttrValue requestAttrValue = new RequestAttrValue();
+        requestAttrValue.setIsDeleted(true);
+        RequestAttrValueExample requestAttrValueExample = new RequestAttrValueExample();
+        requestAttrValueExample.createCriteria().andRequestIdEqualTo(requestId);
+        requestAttrValueMapper.updateByExampleSelective(requestAttrValue, requestAttrValueExample);
     }
 }

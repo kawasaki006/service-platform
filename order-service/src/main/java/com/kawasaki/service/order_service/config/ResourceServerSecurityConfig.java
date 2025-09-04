@@ -45,6 +45,7 @@ public class ResourceServerSecurityConfig {
             @Override
             public AbstractAuthenticationToken convert(Jwt jwt) {
                 Collection<GrantedAuthority> authorities = extractAuthorities(jwt);
+                // inject jwt as principal
                 return new JwtAuthenticationToken(jwt, authorities, jwt.getSubject());
             }
 

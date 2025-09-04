@@ -3,6 +3,8 @@ package com.kawasaki.service.booking_service.service;
 import com.kawasaki.service.booking_service.dto.CreateRequestDTO;
 import com.kawasaki.service.booking_service.dto.GetRequestOfCategoryDTO;
 import com.kawasaki.service.booking_service.model.Request;
+import com.kawasaki.service.common.events.OrderCancelEvent;
+import com.kawasaki.service.common.events.OrderCreateEvent;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,4 +18,8 @@ public interface RequestService {
     List<Request> getSpecificRequestsOfCategory(GetRequestOfCategoryDTO getRequestOfCategoryDTO);
 
     void cancelRequest(Long requestId);
+
+    void handleOrderCreate(OrderCreateEvent orderCreateEvent);
+
+    void handleOrderCancel(OrderCancelEvent orderCancelEvent);
 }

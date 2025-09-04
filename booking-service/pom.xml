@@ -28,6 +28,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+        <!-- mq -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
         <!-- spring security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 
 @Data
 public class ConfirmOrderDTO {
-    Long userId;
-    Long quoteId;
-    Long serviceId;
-    BigDecimal price;
+    private Long requestId;
+    private Long quoteId;
+    private Long serviceId;
+    private BigDecimal price;
 }

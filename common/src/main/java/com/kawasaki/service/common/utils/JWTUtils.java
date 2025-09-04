@@ -1,5 +1,6 @@
 package com.kawasaki.service.common.utils;
 
+import com.kawasaki.service.common.constants.AuthConstants;
 import com.kawasaki.service.common.exception.BizException;
 import com.kawasaki.service.common.exception.BizExceptionCodeEnum;
 import io.jsonwebtoken.*;
@@ -16,7 +17,7 @@ public class JWTUtils {
     private static final long INTERNAL_EXPIRATION = 3600_000L;
 
     public static String generateToken(String subject, Map<String, Object> payload) {
-        return generateToken(subject, payload, "user");
+        return generateToken(subject, payload, AuthConstants.USER_TOKEN);
     }
 
     public static String generateToken(String subject, Map<String, Object> payload, String tokenType) {
@@ -24,7 +25,7 @@ public class JWTUtils {
         return Jwts.builder()
                 .setSubject(subject)
                 .setClaims(payload)
-                .claim("token_type", tokenType)
+                .claim(AuthConstants.TOKEN_TYPE, tokenType)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(key)
@@ -46,9 +47,9 @@ public class JWTUtils {
 
     public static boolean isInternalToken(String token) {
         Claims claims = verifyToken(token);
-        if (!claims.containsKey("token_type")) {
+        if (!claims.containsKey(AuthConstants.TOKEN_TYPE)) {
             throw new BizException(BizExceptionCodeEnum.BAD_TOKEN);
         }
-        return "internal".equals(claims.get("token_type"));
+        return AuthConstants.INTERNAL_TOKEN.equals(claims.get(AuthConstants.TOKEN_TYPE));
     }
 }

@@ -6,11 +6,11 @@ import java.math.BigDecimal;
 
 @Data
 public class OrderConfirmVO {
-    Long userId;
-    Long quoteId;
-    Long serviceId;
-    BigDecimal price;
+    private Long requestId;
+    private Long quoteId;
+    private Long serviceId;
+    private BigDecimal price;
 
     // token for submit order
-    String orderToken;
+    private String orderToken;
 }

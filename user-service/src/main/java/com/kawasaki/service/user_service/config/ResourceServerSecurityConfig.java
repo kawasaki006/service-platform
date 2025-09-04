@@ -1,5 +1,6 @@
 package com.kawasaki.service.user_service.config;
 
+import com.kawasaki.service.common.constants.AuthConstants;
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
@@ -54,9 +55,9 @@ public class ResourceServerSecurityConfig {
             }
 
             private Collection<GrantedAuthority> extractAuthorities(Jwt jwt) {
-                String type = jwt.getClaimAsString("token_type");
+                String type = jwt.getClaimAsString(AuthConstants.TOKEN_TYPE);
 
-                if ("internal".equals(type)) {
+                if (AuthConstants.INTERNAL_TOKEN.equals(type)) {
                     return extractInternalAuthorities(jwt);
                 } else {
                     return extractClientAuthorities(jwt);
@@ -66,13 +67,13 @@ public class ResourceServerSecurityConfig {
             private Collection<GrantedAuthority> extractInternalAuthorities(Jwt jwt) {
                 Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-                List<String> scopes = jwt.getClaimAsStringList("scopes");
+                List<String> scopes = jwt.getClaimAsStringList(AuthConstants.SCOPES);
                 if (scopes != null) {
                     scopes.forEach(scope -> {
                         authorities.add(new SimpleGrantedAuthority(scope));
                     });
                 }
-                authorities.add(new SimpleGrantedAuthority("ROLE_INTERNAL"));
+                authorities.add(new SimpleGrantedAuthority(AuthConstants.ROLE_PREFIX + AuthConstants.INTERNAL));
 
                 return authorities;
             }
@@ -80,10 +81,10 @@ public class ResourceServerSecurityConfig {
             private Collection<GrantedAuthority> extractClientAuthorities(Jwt jwt) {
                 Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-                List<String> roles = jwt.getClaimAsStringList("roles");
+                List<String> roles = jwt.getClaimAsStringList(AuthConstants.ROLES);
                 if (roles != null) {
                     roles.forEach(role -> {
-                        authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+                        authorities.add(new SimpleGrantedAuthority(AuthConstants.ROLE_PREFIX + role));
                     });
                 }
 

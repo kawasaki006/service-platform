@@ -30,7 +30,9 @@ public enum BizExceptionCodeEnum {
 
     INVALID_REQUEST(14001, "Request does not exist or is not open"),
 
-    INVALID_OR_EMPTY_ORDER_TOKEN(15001, "Invalid or empty order token");
+    INVALID_OR_EMPTY_ORDER_TOKEN(15001, "Invalid or empty order token"),
+    ORDER_CREATE_DB_INSERT_EXCEPTION(15002, "Order creation failed, db insertion error"),
+    ORDER_CANCEL_EXCEPTION(15003, "Order cancel failed"),;
 
 
     private final int code;

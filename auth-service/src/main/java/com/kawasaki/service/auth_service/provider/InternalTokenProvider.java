@@ -34,7 +34,7 @@ public class InternalTokenProvider {
             try {
                 JWTUtils.verifyToken(cachedToken);
                 return cachedToken;
-            } catch (JwtException | IllegalArgumentException e) {
+            } catch (JwtException | IllegalArgumentException | BizException e) {
                 // invalid cached token
                 cachedToken = null; // invalidate cache
             }

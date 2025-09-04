@@ -4,11 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum OrderStatusEnum {
-    READY((byte) 0, "ready order"),
-    CONFIRMED((byte) 1, "confirmed order"),
-    PAID((byte) 2, "paid order"),
-    COMPLETED((byte) 3, "completed order"),
-    CANCELLED((byte) 4, "cancelled order");
+    UNPAID((byte) 0, "unpaid order"),
+    PAID((byte) 1, "paid order"),
+    COMPLETED((byte) 2, "completed order"),
+    CANCELLED((byte) 3, "cancelled order");
 
     private final Byte code;
     private final String msg;

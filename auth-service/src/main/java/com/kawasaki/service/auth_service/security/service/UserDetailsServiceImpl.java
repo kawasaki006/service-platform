@@ -2,9 +2,8 @@ package com.kawasaki.service.auth_service.security.service;
 
 import com.kawasaki.service.auth_service.dto.UserDTO;
 import com.kawasaki.service.auth_service.feign.UserFeignService;
-import com.kawasaki.service.auth_service.provider.InternalTokenProvider;
-import com.kawasaki.service.auth_service.security.config.UserDetailsImpl;
-import feign.FeignException;
+import com.kawasaki.service.common.constants.AuthConstants;
+import com.kawasaki.service.common.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,12 +28,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         List<GrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority("USER")
+                new SimpleGrantedAuthority(AuthConstants.USER)
         );
 
         // todo: temp admin authorization, to be deleted later
         if ("admin@poyo.com".equals(username)) {
-            authorities = List.of(new SimpleGrantedAuthority("ADMIN"));
+            authorities = List.of(new SimpleGrantedAuthority(AuthConstants.ADMIN));
         }
 
         return new UserDetailsImpl(

@@ -2,8 +2,8 @@ package com.kawasaki.service.auth_service.security.service;
 
 import com.kawasaki.service.auth_service.dto.ProviderDTO;
 import com.kawasaki.service.auth_service.feign.ProviderFeignService;
-import com.kawasaki.service.auth_service.security.config.UserDetailsImpl;
-import feign.FeignException;
+import com.kawasaki.service.common.constants.AuthConstants;
+import com.kawasaki.service.common.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,7 +28,7 @@ public class ProviderDetailsServiceImpl implements UserDetailsService {
         }
 
         List<GrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority("PROVIDER")
+                new SimpleGrantedAuthority(AuthConstants.PROVIDER)
         );
 
         return new UserDetailsImpl(

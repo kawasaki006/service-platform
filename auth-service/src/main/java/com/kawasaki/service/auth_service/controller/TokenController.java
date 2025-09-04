@@ -1,5 +1,6 @@
 package com.kawasaki.service.auth_service.controller;
 
+import com.kawasaki.service.common.constants.AuthConstants;
 import com.kawasaki.service.common.dto.InternalCredentialRequestDTO;
 import com.kawasaki.service.auth_service.service.InternalClientService;
 import com.kawasaki.service.common.dto.InternalCredentialResponseDTO;
@@ -23,6 +24,7 @@ public class TokenController {
     @PostMapping("/client-credentials")
     public ApiResponse<?> clientCredentials(@RequestBody InternalCredentialRequestDTO requestDTO) {
         if (!internalClientService.validateClient(requestDTO.getClientId(), requestDTO.getClientSecret())) {
+            // todo: change to biz exception
             throw new BizException(HttpStatus.UNAUTHORIZED.value(), "Invalid internal client request");
         }
 
@@ -33,10 +35,11 @@ public class TokenController {
         List<String> scopes = internalClientService.getClientScopes(requestDTO.getClientId());
 
         Map<String, Object> payload = new HashMap<>();
-        payload.put("client_id", requestDTO.getClientId());
-        payload.put("scopes", scopes);
+        // todo: extract constants
+        payload.put(AuthConstants.CLIENT_ID, requestDTO.getClientId());
+        payload.put(AuthConstants.SCOPES, scopes);
 
-        String token = JWTUtils.generateToken(requestDTO.getClientId(), payload, "internal");
+        String token = JWTUtils.generateToken(requestDTO.getClientId(), payload, AuthConstants.INTERNAL_TOKEN);
 
         InternalCredentialResponseDTO responseDTO = new InternalCredentialResponseDTO();
         responseDTO.setAccessToken(token);

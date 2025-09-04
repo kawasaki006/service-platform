@@ -1,7 +1,8 @@
 package com.kawasaki.service.auth_service.controller;
 
 import com.kawasaki.service.auth_service.dto.LoginRequestDTO;
-import com.kawasaki.service.auth_service.security.config.UserDetailsImpl;
+import com.kawasaki.service.common.constants.AuthConstants;
+import com.kawasaki.service.common.security.UserDetailsImpl;
 import com.kawasaki.service.common.exception.BizException;
 import com.kawasaki.service.common.utils.ApiResponse;
 import com.kawasaki.service.common.utils.JWTUtils;
@@ -21,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth/login")
@@ -50,14 +50,14 @@ public class LoginController {
 
         // get jwt
         Map<String, Object> payload = new HashMap<>();
-        payload.put("id", loggedInUser.getId().toString());
+        payload.put(AuthConstants.ID, loggedInUser.getId().toString());
         List<String> roles = loggedInUser.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .toList();
-        payload.put("roles", roles);
+        payload.put(AuthConstants.EMAIL, loginRequestDTO.getEmail());
+        payload.put(AuthConstants.ROLES, roles);
+        // TODO: for now token payloads only contain id and roles
         String jwt = JWTUtils.generateToken(loggedInUser.getUsername(), payload);
-
-        System.out.println("roles: " + roles);
 
         // return
         Map<String, String> map = new HashMap<>();
