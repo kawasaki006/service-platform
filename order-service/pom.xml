@@ -47,6 +47,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
+        <!-- stripe -->
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+        </dependency>
         <!-- common module -->
         <dependency>
             <groupId>com.kawasaki.service</groupId>

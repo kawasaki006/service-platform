@@ -36,6 +36,7 @@
         <spring-security.core.version>6.5.1</spring-security.core.version>
         <jackson.version>2.19.2</jackson.version>
         <openfeign.version>5.0.0-M1</openfeign.version>
+        <stripe.version>29.4.0</stripe.version>
     </properties>
 
     <dependencyManagement>
@@ -59,6 +60,12 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
+            </dependency>
+            <!-- stripe sdk -->
+            <dependency>
+                <groupId>com.stripe</groupId>
+                <artifactId>stripe-java</artifactId>
+                <version>${stripe.version}</version>
             </dependency>
             <!-- common module -->
             <dependency>

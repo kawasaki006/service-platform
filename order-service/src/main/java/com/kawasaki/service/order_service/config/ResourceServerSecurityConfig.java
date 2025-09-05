@@ -29,6 +29,7 @@ public class ResourceServerSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
 
         http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/order/stripe/**").permitAll()
                 .anyRequest().authenticated()
         );
 

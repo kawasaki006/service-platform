@@ -32,7 +32,12 @@ public enum BizExceptionCodeEnum {
 
     INVALID_OR_EMPTY_ORDER_TOKEN(15001, "Invalid or empty order token"),
     ORDER_CREATE_DB_INSERT_EXCEPTION(15002, "Order creation failed, db insertion error"),
-    ORDER_CANCEL_EXCEPTION(15003, "Order cancel failed"),;
+    ORDER_CANCEL_EXCEPTION(15003, "Order cancel failed"),
+    CREATE_STRIPE_PAYMENT_EXCEPTION(15004, "Create stripe payment failed"),
+    INVALID_STRIPE_SIGNATURE(15005, "Invalid stripe signature"),
+    UNHANDLED_STRIPE_PAYMENT_EVENT(15006, "Unhandled stripe payment event"),
+    STRIPE_DESERIALIZER_ERROR(15007, "Stripe deserializer error"),
+    ORDER_DOES_NOT_EXIST(15008, "Order does not exist"),;
 
 
     private final int code;

@@ -14,4 +14,6 @@ public interface OrderService {
     void cancelOrder(Long orderId);
 
     void handleOrderTimeout(OrderCreateEvent orderCreateEvent);
+
+    void markPaid(Long orderId, String paymentIntentId);
 }

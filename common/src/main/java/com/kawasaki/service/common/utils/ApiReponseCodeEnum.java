@@ -10,8 +10,8 @@ public enum ApiReponseCodeEnum {
     VALIDATION_ERROR(422, "Validation error"),
     INTERNAL_ERROR(500, "Internal server error");
 
-    private int code;
-    private String message;
+    private final int code;
+    private final String message;
 
     ApiReponseCodeEnum(int code, String message) {
         this.code = code;

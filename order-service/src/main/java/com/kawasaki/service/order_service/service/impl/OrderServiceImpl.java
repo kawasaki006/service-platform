@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
     public Order submitOrder(SubmitOrderDTO submitOrderDTO, Long userId) {
 
         // verify token
-        if (submitOrderDTO.getOrderToken() == null) {
+        if (Objects.isNull(submitOrderDTO.getOrderToken())) {
             throw new BizException(BizExceptionCodeEnum.INVALID_OR_EMPTY_ORDER_TOKEN);
         }
 
@@ -78,9 +78,9 @@ public class OrderServiceImpl implements OrderService {
         // valid token, continue creating order
         Order order = new Order();
 
-        // check validity of service
+        // todo: check validity of service
 
-        // check validity of quote
+        // todo: check validity of quote
 
         // todo: random order number string
         String orderSn = "12345";
@@ -154,5 +154,25 @@ public class OrderServiceImpl implements OrderService {
         if (order.getStatus().equals(OrderStatusEnum.UNPAID.getCode())) {
             cancelOrder(orderCreateEvent.getOrderId());
         }
+    }
+
+    @Override
+    public void markPaid(Long orderId, String paymentIntentId) {
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        // check order status
+        if (Objects.isNull(order)) {
+            throw new BizException(BizExceptionCodeEnum.ORDER_DOES_NOT_EXIST);
+        }
+        // handle only unpaid order
+        if (!order.getStatus().equals(OrderStatusEnum.UNPAID.getCode())) {
+            // todo: log warning
+            return;
+        }
+
+        order = new Order();
+        order.setId(orderId);
+        order.setStatus(OrderStatusEnum.PAID.getCode());
+        order.setUpdatedAt(new Date(System.currentTimeMillis()));
+        orderMapper.updateByPrimaryKeySelective(order);
     }
 }
