@@ -21,3 +21,23 @@ jobs:
 
       - name: build
         run: mvn clean install -DskipTests
+
+      - name: log in to dockerhub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: build and push images
+        run: |
+          docker build -t haonanxu006/eureka-server:v${{ github.run_number }} ./eureka-server
+          docker push haonanxu006/eureka-server:v${{ github.run_number }}
+
+          docker build -t haonanxu006/user-service:v${{ github.run_number }} ./user-service
+          docker push haonanxu006/user-service:v${{ github.run_number }}
+
+          docker build -t haonanxu006/order-service:v${{ github.run_number }} ./order-service
+          docker push haonanxu006/order-service:v${{ github.run_number }}
+
+          docker build -t haonanxu006/gateway:v${{ github.run_number }} ./gateway
+          docker push haonanxu006/gateway:v${{ github.run_number }}
