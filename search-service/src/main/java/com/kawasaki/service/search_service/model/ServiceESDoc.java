@@ -24,6 +24,9 @@ public class ServiceESDoc {
     @Field(type = FieldType.Long)
     private Long categoryId;
 
+    @Field(type = FieldType.Text, analyzer = "standard", searchAnalyzer = "standard")
+    private String categoryName;
+
     @Field(type = FieldType.Double, index = false)
     private BigDecimal basePrice;
 

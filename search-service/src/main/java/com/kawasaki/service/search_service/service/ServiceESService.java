@@ -11,5 +11,6 @@ public interface ServiceESService {
     Optional<ServiceESDoc> findByServiceId(Long serviceId);
     List<ServiceESDoc> searchByTitle(String title);
     List<ServiceESDoc> findByCategoryId(Long categoryId);
+    List<ServiceESDoc> findByCategoryName(String categoryName);
     long deleteByServiceId(Long serviceId);
 }

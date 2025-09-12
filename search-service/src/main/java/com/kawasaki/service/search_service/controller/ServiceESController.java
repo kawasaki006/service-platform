@@ -23,15 +23,21 @@ public class ServiceESController {
         return ApiResponse.success(saved);
     }
 
-    @GetMapping("/title")
-    public ApiResponse<List<ServiceESDoc>> searchByTitle(@RequestParam String title) {
-        List<ServiceESDoc> results = serviceESService.searchByTitle(title);
-        return ApiResponse.success(results);
-    }
+//    @GetMapping("/title")
+//    public ApiResponse<List<ServiceESDoc>> searchByTitle(@RequestParam String title) {
+//        List<ServiceESDoc> results = serviceESService.searchByTitle(title);
+//        return ApiResponse.success(results);
+//    }
 
     @GetMapping("/category/{categoryId}")
     public ApiResponse<List<ServiceESDoc>> findByCategoryId(@PathVariable Long categoryId) {
         List<ServiceESDoc> results = serviceESService.findByCategoryId(categoryId);
+        return ApiResponse.success(results);
+    }
+
+    @GetMapping("/category")
+    public ApiResponse<List<ServiceESDoc>> findByCategoryName(@RequestParam String categoryName) {
+        List<ServiceESDoc> results = serviceESService.findByCategoryName(categoryName);
         return ApiResponse.success(results);
     }
 

@@ -26,12 +26,11 @@ public class ServiceController {
     @PostMapping("/create")
     public ApiResponse<ServiceDTO> create(@Valid @RequestBody CreateServiceRequestDTO createServiceRequestDTO) {
         //TODO: get provider id from security context holder (currently hard coded)
-        long providerId = Long.valueOf(2);
+        long providerId = 2L;
         ServiceDTO service = serviceService.createService(createServiceRequestDTO, providerId);
 
         // save to es
         ServiceESDoc esDoc = serviceESService.saveService(service);
-
         ServiceDTO serviceDTO = new ServiceDTO();
         BeanUtils.copyProperties(service, serviceDTO);
 

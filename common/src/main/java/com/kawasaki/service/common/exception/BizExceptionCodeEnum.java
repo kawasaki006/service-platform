@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 * 13 - service
 * 14 - booking
 * 15 - order
-*
+* 16 - search
 */
 @Getter
 public enum BizExceptionCodeEnum {
@@ -37,7 +37,9 @@ public enum BizExceptionCodeEnum {
     INVALID_STRIPE_SIGNATURE(15005, "Invalid stripe signature"),
     UNHANDLED_STRIPE_PAYMENT_EVENT(15006, "Unhandled stripe payment event"),
     STRIPE_DESERIALIZER_ERROR(15007, "Stripe deserializer error"),
-    ORDER_DOES_NOT_EXIST(15008, "Order does not exist"),;
+    ORDER_DOES_NOT_EXIST(15008, "Order does not exist"),
+
+    SEARCH_CATEGORY_NAME_ERROR(16001, "Search category name error"),;
 
 
     private final int code;

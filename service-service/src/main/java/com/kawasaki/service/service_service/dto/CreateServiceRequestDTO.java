@@ -16,6 +16,9 @@ public class CreateServiceRequestDTO {
     @NotBlank
     private Long categoryId;
 
+    @NotBlank
+    private String categoryName;
+
     private BigDecimal basePrice;
 
     private List<AttrDTO> attrs;

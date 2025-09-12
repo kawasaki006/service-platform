@@ -1,5 +1,8 @@
 package com.kawasaki.service.search_service.service.impl;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.kawasaki.service.search_service.model.ServiceESDoc;
 import com.kawasaki.service.search_service.repository.ServiceESRepository;
 import com.kawasaki.service.search_service.service.ServiceESService;
@@ -9,14 +12,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class ServiceESServiceImpl implements ServiceESService {
     @Autowired
     private ServiceESRepository serviceESRepository;
+
+    @Autowired
+    private ElasticsearchClient elasticsearchClient;
 
     @Override
     public ServiceESDoc saveService(ServiceESDoc serviceDoc) {
@@ -41,6 +49,28 @@ public class ServiceESServiceImpl implements ServiceESService {
     @Override
     public List<ServiceESDoc> findByCategoryId(Long categoryId) {
         return serviceESRepository.findByCategoryId(categoryId);
+    }
+
+    @Override
+    public List<ServiceESDoc> findByCategoryName(String categoryName) {
+        try {
+            SearchResponse<ServiceESDoc> response = elasticsearchClient.search(s -> s
+                    .index("service")
+                    .query(q -> q
+                            .match(m -> m
+                                    .field("categoryName")
+                                    .query(categoryName)
+                                    .fuzziness("AUTO")
+                            )
+                    ),
+            ServiceESDoc.class);
+
+            return response.hits().hits().stream()
+                    .map(Hit::source)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new BizException(BizExceptionCodeEnum.SEARCH_CATEGORY_NAME_ERROR);
+        }
     }
 
     @Override
