@@ -21,12 +21,16 @@ Responsible for authentication and token issuance.
 - Issues and validates **internal tokens** with scoped permissions
 - Caches internal tokens locally to reduce repeated auth requests
 
+---
+
 ### User / Provider Services
 Manage platform participants.
 
 - User and provider accounts are stored in separate services
 - Integrated with Auth Service via **Feign clients**
 - Enforced role-based access through JWT claims
+
+---
 
 ### Booking Service
 Handles service requests and quotations.
@@ -36,6 +40,8 @@ Handles service requests and quotations.
 - Listens to order-related events to update request/quote states
 - Secured as a **resource server** using JWT validation
 
+---
+
 ### Order Service
 Manages order lifecycle and payment coordination.
 
@@ -43,6 +49,8 @@ Manages order lifecycle and payment coordination.
 - Implements **idempotent order submission** using Redis token validation
 - Uses **RabbitMQ delayed queues (TTL + DLX)** to automatically cancel unpaid orders
 - Emits order creation and cancellation events for downstream services
+
+---
 
 ### Service & Search Services
 Support service discovery and filtering.
